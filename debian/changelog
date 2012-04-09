@@ -1,6 +1,8 @@
 moreutils (0.46) UNRELEASED; urgency=low
 
   * Typo. Closes: #649158
+  * combine: Avoid reading files twice, to support data coming from
+    pipes. Closes: #667960 Thanks, Carsten Hey
 
  -- Joey Hess <joeyh@debian.org>  Fri, 18 Nov 2011 13:37:10 -0400
 

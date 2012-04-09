@@ -104,9 +104,32 @@ sub compare_or {
 
 sub compare_xor {
 	my ($file1, $file2) = @_;
-	
-	compare_not($file1, $file2);
-	compare_not($file2, $file1);
+
+	my ($lines2, $seen2) = ([], {});
+	filemap $file2,
+		sub {
+			push @$lines2, $_;
+			$seen2->{$_} = 1;
+		};
+
+	filemap $file1,
+		sub {
+			# Print all lines in file1 that are not in file2,
+			# and mark lines that are in both files by setting
+			# their value in %seen2 to 0.
+			if (exists $seen2->{$_}) {
+				$seen2->{$_} = 0;
+			}
+			else {
+				print "$_\n";
+			}
+		};
+
+	foreach (@$lines2) {
+		# Print all lines that are in file2 but not in file1.
+		# The value of these lines in seen2 is set to 1.
+		print "$_\n" if $seen2->{$_};
+	}
 }
 
 sub compare_not {

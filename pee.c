@@ -40,7 +40,7 @@ main(int argc, char **argv) {
 		pipes[i - 1] = popen(argv[i], "w");
 		if (!pipes[i - 1]) {
 			fprintf(stderr, "Can not open pipe to '%s\'\n", argv[i]);
-			close_pipes(pipes, i);
+			close_pipes(pipes, argc);
 
 			exit(EXIT_FAILURE);
 		}
@@ -52,7 +52,7 @@ main(int argc, char **argv) {
 		for(i = 0; i < argc; i++) {
 			if (fwrite(buf, sizeof(char), r, pipes[i]) != r) {
 				fprintf(stderr, "Write error to `%s\'\n", argv[i + 1]);
-				close_pipes(pipes, i);
+				close_pipes(pipes, argc);
 				exit(EXIT_FAILURE);
 			}
 		}

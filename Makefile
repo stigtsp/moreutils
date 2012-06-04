@@ -1,4 +1,4 @@
-BINS=isutf8 ifdata ifne pee sponge mispipe lckdo parallel
+BINS=isutf8 ifdata ifne pee sponge mispipe lckdo parallel errno
 PERLSCRIPTS=vidir vipe ts combine zrun chronic
 MANS=sponge.1 vidir.1 vipe.1 isutf8.1 ts.1 combine.1 ifdata.1 ifne.1 pee.1 zrun.1 chronic.1 mispipe.1 lckdo.1 parallel.1
 CFLAGS=-O2 -g -Wall
@@ -10,7 +10,7 @@ DOCBOOK2XMAN=docbook2x-man
 all: $(BINS) $(MANS)
 
 clean:
-	rm -f $(BINS) $(MANS)
+	rm -f $(BINS) $(MANS) dump.c errnos.h errno.o
 
 install:
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
@@ -46,6 +46,12 @@ lckdo.1: lckdo.docbook
 
 parallel.1: parallel.docbook
 	$(DOCBOOK2XMAN) $<
+	
+errno.o: errnos.h
+errnos.h:
+	echo '#include <errno.h>' > dump.c
+	$(CC) -E -dD dump.c | ./errnos > errnos.h
+	rm -f dump.c
 
 %.1: %
 	pod2man --center=" " --release="moreutils" $< > $@;

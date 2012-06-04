@@ -50,7 +50,7 @@ parallel.1: parallel.docbook
 errno.o: errnos.h
 errnos.h:
 	echo '#include <errno.h>' > dump.c
-	$(CC) -E -dD dump.c | ./errnos > errnos.h
+	$(CC) -E -dD dump.c | awk '/^#define E/ { printf "{\"%s\",%d},\n", $$2, $$3 }' > errnos.h
 	rm -f dump.c
 	
 errno.1: errno.docbook

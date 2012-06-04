@@ -20,6 +20,7 @@ Description: additional Unix utilities
  So far, it includes the following utilities:
   - chronic: runs a command quietly unless it fails
   - combine: combine the lines in two files using boolean operations
+  - errno: look up errno names and descriptions
   - ifdata: get network interface info without parsing ifconfig output
   - ifne: run a program if the standard input is not empty
   - isutf8: check if a file or standard input is utf-8

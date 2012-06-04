@@ -42,6 +42,10 @@ Files: parallel.c
 Copyright: 2008  Tollef Fog Heen <tfheen@err.no>
 License: GPL-2
 
+Files: errno.c errno.docbook
+Copyright: 2012 Lars Wirzenius
+License: GPL-2+
+
 Files: physmem.c
 Copyright: 2000, 2001, 2003, 2005, 2006 Free Software Foundation, Inc.
 License: GPL-2+

@@ -17,6 +17,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#define _GNU_SOURCE
 
 #include <ctype.h>
 #include <errno.h>
@@ -72,17 +73,44 @@ report_from_code(int code)
 }
 
 
+static bool
+matches(int code, int num_words, char **words)
+{
+    const char *text = strerror(code);
+    int i;
+    
+    for (i = 0; i < num_words; ++i) {
+        if (strcasestr(text, words[i]) == NULL)
+            return false;
+    }
+    return true;
+}
+
+
+static void
+search(int num_words, char **words)
+{
+    int i;
+    
+    for (i = 0; i < num_errnos; ++i) {
+        if (matches(errnos[i].code, num_words, words))
+            report(errnos[i].name, errnos[i].code);
+    }
+}
+
+
 static struct option
 options[] = {
     { "help", 0, NULL, 'h' },
     { "list", 0, NULL, 'l' },
+    { "search", 0, NULL, 's' },
 };
 
 
 static void
 usage(void)
 {
-    printf("Usage: errno [-l] [--list] [keyword]\n");
+    printf("Usage: errno [-ls] [--list] [--search] [keyword]\n");
 }
 
 
@@ -92,10 +120,10 @@ main(int argc, char **argv)
     int i;
     int exit_code;
     int index = 0;
-    enum { lookup_mode, list_mode } mode = lookup_mode;
+    enum { lookup_mode, list_mode, search_mode } mode = lookup_mode;
     
     for (;;) {
-        int c = getopt_long(argc, argv, "l", options, &index);
+        int c = getopt_long(argc, argv, "hls", options, &index);
         if (c == -1)
             break;
             
@@ -106,6 +134,10 @@ main(int argc, char **argv)
 
         case 'l':
             mode = list_mode;
+            break;
+            
+        case 's':
+            mode = search_mode;
             break;
 
         case '?':
@@ -121,7 +153,7 @@ main(int argc, char **argv)
 
     switch (mode) {
     case lookup_mode:
-        for (i = 1; i < argc; ++i) {
+        for (i = optind; i < argc; ++i) {
             const char *arg = argv[i];
             if (toupper(arg[0]) == 'E') {
                 if (!report_from_name(arg))
@@ -139,6 +171,10 @@ main(int argc, char **argv)
     case list_mode:
         for (i = 0; i < num_errnos; ++i)
             report(errnos[i].name, errnos[i].code);
+        break;
+        
+    case search_mode:
+        search(argc - optind, argv + optind);
         break;
     }
 

@@ -81,6 +81,15 @@ with this program; if not, write to the Free Software Foundation, Inc.,
                     <para>List all errno values.</para>
                 </listitem>
             </varlistentry>
+
+            <varlistentry>
+                <term><option>-s</option></term>
+                <term><option>--search</option></term>
+                <listitem>
+                    <para>Search for errors whose description contains
+                    all the given words (case-insensitive).</para>
+                </listitem>
+            </varlistentry>
         </variablelist>
 
 	</refsect1>

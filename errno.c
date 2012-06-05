@@ -21,6 +21,7 @@
 
 #include <ctype.h>
 #include <errno.h>
+#include <locale.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -121,6 +122,8 @@ main(int argc, char **argv)
     int exit_code;
     int index = 0;
     enum { lookup_mode, list_mode, search_mode } mode = lookup_mode;
+    
+    setlocale(LC_ALL, "");
     
     for (;;) {
         int c = getopt_long(argc, argv, "hls", options, &index);

@@ -100,18 +100,47 @@ search(int num_words, char **words)
 }
 
 
+static void
+search_all(int num_words, char **words)
+{
+    FILE *f;
+    
+    /* Static buffers are ugly, but they're simple. If anyone has a 
+       locale name longer than a kilobyte, they will suffer, and they
+       will complain, and then I will fix this. */
+    char line[1024];
+
+    f = popen("locale -a", "r");
+    if (f == NULL) {
+        fprintf(stderr, "ERROR: Can't execute locale -a: %d: %s\n",
+                errno, strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+    
+    while (fgets(line, sizeof line, f) != NULL) {
+        line[strcspn(line, "\n")] = '\0';
+        setlocale(LC_ALL, line);
+        search(num_words, words);
+    }
+
+    fclose(f);
+}
+
+
 static struct option
 options[] = {
     { "help", 0, NULL, 'h' },
     { "list", 0, NULL, 'l' },
     { "search", 0, NULL, 's' },
+    { "search-all-locales", 0, NULL, 'S' },
 };
 
 
 static void
 usage(void)
 {
-    printf("Usage: errno [-ls] [--list] [--search] [keyword]\n");
+    printf("Usage: errno [-lsS] [--list] [--search] [--search-all-locales] "
+           "[keyword]\n");
 }
 
 
@@ -121,12 +150,17 @@ main(int argc, char **argv)
     int i;
     int exit_code;
     int index = 0;
-    enum { lookup_mode, list_mode, search_mode } mode = lookup_mode;
+    enum {
+        lookup_mode, 
+        list_mode, 
+        search_mode, 
+        search_all_mode 
+    } mode = lookup_mode;
     
     setlocale(LC_ALL, "");
     
     for (;;) {
-        int c = getopt_long(argc, argv, "hls", options, &index);
+        int c = getopt_long(argc, argv, "hlsS", options, &index);
         if (c == -1)
             break;
             
@@ -141,6 +175,10 @@ main(int argc, char **argv)
             
         case 's':
             mode = search_mode;
+            break;
+            
+        case 'S':
+            mode = search_all_mode;
             break;
 
         case '?':
@@ -178,6 +216,10 @@ main(int argc, char **argv)
         
     case search_mode:
         search(argc - optind, argv + optind);
+        break;
+        
+    case search_all_mode:
+        search_all(argc - optind, argv + optind);
         break;
     }
 

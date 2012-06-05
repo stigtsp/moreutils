@@ -33,7 +33,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 			<firstname>Lars</firstname>
 			<surname>Wirzenius</surname>
 		</author>
-		<date>2012-06-04</date>
+		<date>2012-06-05</date>
 	</refentryinfo>
 
 	<refmeta>
@@ -51,6 +51,17 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 			<command>errno</command>
             <arg choice="req"><replaceable>name-or-code</replaceable></arg>
 		</cmdsynopsis>
+		<cmdsynopsis>
+			<command>errno</command>
+            <arg>-ls</arg>
+            <arg>--list</arg>
+		</cmdsynopsis>
+		<cmdsynopsis>
+			<command>errno</command>
+            <arg>-s</arg>
+            <arg>--search</arg>
+            <arg choice="req"><replaceable>word</replaceable></arg>
+		</cmdsynopsis>
 	</refsynopsisdiv>
 	
 	<refsect1>
@@ -63,6 +74,30 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		If given the code 2, it printes <literal>ENOENT</literal>
 		and the same description.</para>
 		
+	</refsect1>
+	
+	<refsect1>
+        <title>OPTIONS</title>
+        
+        <variablelist>
+            <varlistentry>
+                <term><option>-l</option></term>
+                <term><option>--list</option></term>
+                <listitem>
+                    <para>List all errno values.</para>
+                </listitem>
+            </varlistentry>
+
+            <varlistentry>
+                <term><option>-s</option></term>
+                <term><option>--search</option></term>
+                <listitem>
+                    <para>Search for errors whose description contains
+                    all the given words (case-insensitive).</para>
+                </listitem>
+            </varlistentry>
+        </variablelist>
+
 	</refsect1>
 	
 	<refsect1>

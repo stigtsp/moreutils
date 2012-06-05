@@ -17,13 +17,17 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#define _GNU_SOURCE
 
 #include <ctype.h>
 #include <errno.h>
+#include <locale.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <getopt.h>
 
 
 static struct {
@@ -70,25 +74,112 @@ report_from_code(int code)
 }
 
 
+static bool
+matches(int code, int num_words, char **words)
+{
+    const char *text = strerror(code);
+    int i;
+    
+    for (i = 0; i < num_words; ++i) {
+        if (strcasestr(text, words[i]) == NULL)
+            return false;
+    }
+    return true;
+}
+
+
+static void
+search(int num_words, char **words)
+{
+    int i;
+    
+    for (i = 0; i < num_errnos; ++i) {
+        if (matches(errnos[i].code, num_words, words))
+            report(errnos[i].name, errnos[i].code);
+    }
+}
+
+
+static struct option
+options[] = {
+    { "help", 0, NULL, 'h' },
+    { "list", 0, NULL, 'l' },
+    { "search", 0, NULL, 's' },
+};
+
+
+static void
+usage(void)
+{
+    printf("Usage: errno [-ls] [--list] [--search] [keyword]\n");
+}
+
+
 int 
 main(int argc, char **argv)
 {
     int i;
     int exit_code;
+    int index = 0;
+    enum { lookup_mode, list_mode, search_mode } mode = lookup_mode;
     
-    exit_code = EXIT_SUCCESS;
-    for (i = 1; i < argc; ++i) {
-        const char *arg = argv[i];
-        if (toupper(arg[0]) == 'E') {
-            if (!report_from_name(arg))
-                exit_code = EXIT_FAILURE;
-        } else if (isdigit(arg[0])) {
-            if (!report_from_code(atoi(arg)))
-                exit_code = EXIT_FAILURE;
-        } else {
-            fprintf(stderr, "ERROR: Not understood: %s\n", arg);
-            exit_code = EXIT_FAILURE;
+    setlocale(LC_ALL, "");
+    
+    for (;;) {
+        int c = getopt_long(argc, argv, "hls", options, &index);
+        if (c == -1)
+            break;
+            
+        switch (c) {
+        case 'h':
+            usage();
+            return EXIT_SUCCESS;
+
+        case 'l':
+            mode = list_mode;
+            break;
+            
+        case 's':
+            mode = search_mode;
+            break;
+
+        case '?':
+            break;
+
+        default:
+            fprintf(stderr, "getopt returned 0x%02x\n", c);
+            return EXIT_FAILURE;
         }
     }
+ 
+    exit_code = EXIT_SUCCESS;
+
+    switch (mode) {
+    case lookup_mode:
+        for (i = optind; i < argc; ++i) {
+            const char *arg = argv[i];
+            if (toupper(arg[0]) == 'E') {
+                if (!report_from_name(arg))
+                    exit_code = EXIT_FAILURE;
+            } else if (isdigit(arg[0])) {
+                if (!report_from_code(atoi(arg)))
+                    exit_code = EXIT_FAILURE;
+            } else {
+                fprintf(stderr, "ERROR: Not understood: %s\n", arg);
+                exit_code = EXIT_FAILURE;
+            }
+        }
+        break;
+        
+    case list_mode:
+        for (i = 0; i < num_errnos; ++i)
+            report(errnos[i].name, errnos[i].code);
+        break;
+        
+    case search_mode:
+        search(argc - optind, argv + optind);
+        break;
+    }
+
     return exit_code;
 }

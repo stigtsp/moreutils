@@ -74,8 +74,16 @@ report_from_code(int code)
 
 static struct option
 options[] = {
+    { "help", 0, NULL, 'h' },
     { "list", 0, NULL, 'l' },
 };
+
+
+static void
+usage(void)
+{
+    printf("Usage: errno [-l] [--list] [keyword]\n");
+}
 
 
 int 
@@ -92,6 +100,10 @@ main(int argc, char **argv)
             break;
             
         switch (c) {
+        case 'h':
+            usage();
+            return EXIT_SUCCESS;
+
         case 'l':
             mode = list_mode;
             break;

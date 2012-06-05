@@ -24,6 +24,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
+#include <getopt.h>
 
 
 static struct {
@@ -70,25 +72,63 @@ report_from_code(int code)
 }
 
 
+static struct option
+options[] = {
+    { "list", 0, NULL, 'l' },
+};
+
+
 int 
 main(int argc, char **argv)
 {
     int i;
     int exit_code;
+    int index = 0;
+    enum { lookup_mode, list_mode } mode = lookup_mode;
     
-    exit_code = EXIT_SUCCESS;
-    for (i = 1; i < argc; ++i) {
-        const char *arg = argv[i];
-        if (toupper(arg[0]) == 'E') {
-            if (!report_from_name(arg))
-                exit_code = EXIT_FAILURE;
-        } else if (isdigit(arg[0])) {
-            if (!report_from_code(atoi(arg)))
-                exit_code = EXIT_FAILURE;
-        } else {
-            fprintf(stderr, "ERROR: Not understood: %s\n", arg);
-            exit_code = EXIT_FAILURE;
+    for (;;) {
+        int c = getopt_long(argc, argv, "l", options, &index);
+        if (c == -1)
+            break;
+            
+        switch (c) {
+        case 'l':
+            mode = list_mode;
+            break;
+
+        case '?':
+            break;
+
+        default:
+            fprintf(stderr, "getopt returned 0x%02x\n", c);
+            return EXIT_FAILURE;
         }
     }
+ 
+    exit_code = EXIT_SUCCESS;
+
+    switch (mode) {
+    case lookup_mode:
+        for (i = 1; i < argc; ++i) {
+            const char *arg = argv[i];
+            if (toupper(arg[0]) == 'E') {
+                if (!report_from_name(arg))
+                    exit_code = EXIT_FAILURE;
+            } else if (isdigit(arg[0])) {
+                if (!report_from_code(atoi(arg)))
+                    exit_code = EXIT_FAILURE;
+            } else {
+                fprintf(stderr, "ERROR: Not understood: %s\n", arg);
+                exit_code = EXIT_FAILURE;
+            }
+        }
+        break;
+        
+    case list_mode:
+        for (i = 0; i < num_errnos; ++i)
+            report(errnos[i].name, errnos[i].code);
+        break;
+    }
+
     return exit_code;
 }

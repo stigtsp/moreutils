@@ -51,6 +51,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 			<command>errno</command>
             <arg choice="req"><replaceable>name-or-code</replaceable></arg>
 		</cmdsynopsis>
+		<cmdsynopsis>
+			<command>errno</command>
+            <arg>-l</arg>
+            <arg>--list</arg>
+		</cmdsynopsis>
 	</refsynopsisdiv>
 	
 	<refsect1>

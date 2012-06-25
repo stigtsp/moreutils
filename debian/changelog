@@ -1,8 +1,8 @@
-moreutils (0.47) UNRELEASED; urgency=low
+moreutils (0.47) unstable; urgency=low
 
   * errno: New utility that looks up errno numbers or names.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 04 Jun 2012 11:49:52 -0400
+ -- Joey Hess <joeyh@debian.org>  Mon, 25 Jun 2012 16:31:17 -0400
 
 moreutils (0.46) unstable; urgency=low
 

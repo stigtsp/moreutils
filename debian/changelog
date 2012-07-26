@@ -1,3 +1,10 @@
+moreutils (0.48) UNRELEASED; urgency=low
+
+  * Allow overriding PREFIX and CFLAGS to make the build more flexible
+    (Thanks, Ben Walton)
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 25 Jul 2012 23:39:34 -0400
+
 moreutils (0.47) unstable; urgency=low
 
   * errno: New utility that looks up errno numbers or names.

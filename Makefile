@@ -1,9 +1,9 @@
 BINS=isutf8 ifdata ifne pee sponge mispipe lckdo parallel errno
 PERLSCRIPTS=vidir vipe ts combine zrun chronic
 MANS=sponge.1 vidir.1 vipe.1 isutf8.1 ts.1 combine.1 ifdata.1 ifne.1 pee.1 zrun.1 chronic.1 mispipe.1 lckdo.1 parallel.1 errno.1
-CFLAGS=-O2 -g -Wall
+CFLAGS?=-O2 -g -Wall
 INSTALL_BIN?=install -s
-PREFIX=/usr
+PREFIX?=/usr
 
 DOCBOOK2XMAN=docbook2x-man
 

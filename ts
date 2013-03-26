@@ -133,7 +133,7 @@ while (<>) {
 				(?::\d\d)?	#       (optional seconds)
 				(?:\s+[+-]\d\d\d\d)? #  (optional timezone)
 			|
-			\w{3}\s+\d\d\s+\d\d:\d\d:\d\d # syslog form
+			\w{3}\s+\d{1,2}\s+\d\d:\d\d:\d\d # syslog form
 			|
 			\d\d\d[-:]\d\d[-:]\d\dT\d\d:\d\d:\d\d.\d+ # ISO-8601
 			|

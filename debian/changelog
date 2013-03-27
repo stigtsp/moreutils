@@ -5,6 +5,8 @@ moreutils (0.48) UNRELEASED; urgency=low
   * Typo. Closes: #697113
   * ts: -i enables incremental timestamping.
     Thanks, Thomas Vander Stichele
+  * ts: Support single-digit day dates.
+    Thanks, Peter Lunicks
 
  -- Joey Hess <joeyh@debian.org>  Wed, 25 Jul 2012 23:39:34 -0400
 

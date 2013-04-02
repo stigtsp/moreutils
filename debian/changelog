@@ -7,6 +7,7 @@ moreutils (0.48) UNRELEASED; urgency=low
     Thanks, Thomas Vander Stichele
   * ts: Support single-digit day dates.
     Thanks, Peter Lunicks
+  * sponge: Check fclose to detect certian short reads. Closes: #704453
 
  -- Joey Hess <joeyh@debian.org>  Wed, 25 Jul 2012 23:39:34 -0400
 

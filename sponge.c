@@ -222,8 +222,14 @@ static void copy_tmpfile (FILE *tmpfile, FILE *outfile, char *buf, size_t size) 
 		fclose(tmpfile);
 		exit(1);
 	}
-	fclose(tmpfile);
-	fclose(outfile);
+	if (fclose(tmpfile) != 0) {
+		perror("read temporary file");
+		exit(1);
+	}
+	if (fclose(outfile) != 0) {
+		perror("error writing buffer to output file");
+		exit(1);
+	}
 }
 
 FILE *open_tmpfile (void) {

@@ -68,6 +68,7 @@ my $use_format=@ARGV;
 my $format="%b %d %H:%M:%S";
 if ($inc) {
 	$format="%H:%M:%S";
+	$ENV{TZ}='GMT';
 }
 $format=shift if @ARGV;
 
@@ -107,18 +108,14 @@ while (<>) {
 			}
 			my $s=sprintf("%06i", $microseconds);
 			$f=~s/\%\.([Ss])/%$1.$s/g;
-			if (!$inc) {
-				print strftime($f, localtime($seconds));
-			} else {
-				print strftime($f, gmtime($seconds));
-			}
+			print strftime($f, localtime($seconds));
 		}
 		else {
 			if ($inc) {
 				my $seconds = time;
 				my $deltaseconds = $seconds - $lastseconds;
 				$lastseconds = $seconds;
-				print strftime($format, gmtime($deltaseconds));
+				print strftime($format, localtime($deltaseconds));
 			} else {
 				print strftime($format, localtime);
 			}

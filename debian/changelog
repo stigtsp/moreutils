@@ -1,4 +1,4 @@
-moreutils (0.48) UNRELEASED; urgency=low
+moreutils (0.48) unstable; urgency=low
 
   * Allow overriding PREFIX and CFLAGS to make the build more flexible
     (Thanks, Ben Walton)
@@ -9,7 +9,7 @@ moreutils (0.48) UNRELEASED; urgency=low
     Thanks, Peter Lunicks
   * sponge: Check fclose to detect certian short reads. Closes: #704453
 
- -- Joey Hess <joeyh@debian.org>  Wed, 25 Jul 2012 23:39:34 -0400
+ -- Joey Hess <joeyh@debian.org>  Sat, 04 May 2013 23:50:03 -0400
 
 moreutils (0.47) unstable; urgency=low
 

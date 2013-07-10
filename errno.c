@@ -133,6 +133,7 @@ options[] = {
     { "list", 0, NULL, 'l' },
     { "search", 0, NULL, 's' },
     { "search-all-locales", 0, NULL, 'S' },
+    { 0, 0, 0, 0 }
 };
 
 

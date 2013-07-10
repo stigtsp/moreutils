@@ -1,6 +1,9 @@
 moreutils (0.49) UNRELEASED; urgency=low
 
   * ts: Fix timezone used with -i
+  * errno, isutf8: Fix zero-termination of option list, which could lead
+    to getopt crash. Closes: #715867
+    (Thanks, Mayhem Team)
 
  -- Joey Hess <joeyh@debian.org>  Sun, 05 May 2013 11:20:57 -0400
 

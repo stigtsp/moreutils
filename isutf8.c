@@ -227,6 +227,7 @@ int main(int argc, char **argv) {
 	struct option options[] = {
 		{ "help", no_argument, NULL, 'h' },
 		{ "quiet", no_argument, &quiet, 1 },
+		{ 0, 0, 0, 0 }
 	};
 	int opt;
 	

@@ -32,7 +32,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
-#if defined(__FreeBSD_kernel__)
+#if !defined(WEXITED)
 #define WEXITED 0
 #endif
 

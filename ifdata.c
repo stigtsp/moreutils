@@ -14,6 +14,10 @@
 	#include <net/if.h>
 #endif
 
+#if defined(__GNU__)
+	#include <net/if.h>
+#endif
+
 #include <netinet/in.h>
 #include <errno.h>
 #include <fcntl.h>

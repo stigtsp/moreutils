@@ -1,3 +1,10 @@
+moreutils (0.50) UNRELEASED; urgency=low
+
+  * Fix build on Hurd. Closes: #716653
+    (Thanks, Pino Toscano)
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 11 Jul 2013 10:55:52 -0400
+
 moreutils (0.49) unstable; urgency=low
 
   * ts: Fix timezone used with -i

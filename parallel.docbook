@@ -25,6 +25,8 @@ Written by Joey Hess
 	<refmeta>
 		<refentrytitle>parallel</refentrytitle>
 		<manvolnum>1</manvolnum>
+		<refmiscinfo class="manual">moreutils</refmiscinfo>
+		<refmiscinfo class="source">moreutils</refmiscinfo>
 	</refmeta>
 
 	<refnamediv>

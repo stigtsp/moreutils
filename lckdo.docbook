@@ -26,6 +26,8 @@ Public domain.
 	<refmeta>
 		<refentrytitle>lckdo</refentrytitle>
 		<manvolnum>1</manvolnum>
+		<refmiscinfo class="manual">moreutils</refmiscinfo>
+		<refmiscinfo class="source">moreutils</refmiscinfo>
 	</refmeta>
 
 	<refnamediv>

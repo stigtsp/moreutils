@@ -39,6 +39,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	<refmeta>
 		<refentrytitle>ifne</refentrytitle>
 		<manvolnum>1</manvolnum>
+		<refmiscinfo class="manual">moreutils</refmiscinfo>
+		<refmiscinfo class="source">moreutils</refmiscinfo>
 	</refmeta>
 
 	<refnamediv>

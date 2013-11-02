@@ -23,30 +23,9 @@ install:
 check: isutf8
 	./check-isutf8
 
-isutf8.1: isutf8.docbook
+%.1: %.docbook
 	$(DOCBOOK2XMAN) $<
 
-ifdata.1: ifdata.docbook
-	$(DOCBOOK2XMAN) $<
-
-ifne.1: ifne.docbook
-	$(DOCBOOK2XMAN) $<
-
-pee.1: pee.docbook
-	$(DOCBOOK2XMAN) $<
-
-sponge.1: sponge.docbook
-	$(DOCBOOK2XMAN) $<
-
-mispipe.1: mispipe.docbook
-	$(DOCBOOK2XMAN) $<
-
-lckdo.1: lckdo.docbook
-	$(DOCBOOK2XMAN) $<
-
-parallel.1: parallel.docbook
-	$(DOCBOOK2XMAN) $<
-	
 errno.o: errnos.h
 errnos.h:
 	echo '#include <errno.h>' > dump.c

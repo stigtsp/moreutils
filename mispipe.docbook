@@ -21,7 +21,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 -->
 
 <!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.4//EN"
-"file:///usr/share/xml/docbook/schema/dtd/4.4/docbookx.dtd"
+"http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd"
 []>
 
 <refentry>

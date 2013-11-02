@@ -24,6 +24,7 @@ check: isutf8
 	./check-isutf8
 
 %.1: %.docbook
+	xmllint --noout --valid $<
 	$(DOCBOOK2XMAN) $<
 
 errno.o: errnos.h

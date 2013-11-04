@@ -1,3 +1,10 @@
+moreutils (0.51) UNRELEASED; urgency=low
+
+  * Fix ifdata to build on OS X. Thanks, Peter Eisentraut
+    Closes: #575294
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 04 Nov 2013 12:28:04 -0400
+
 moreutils (0.50) unstable; urgency=low
 
   * Fix build on Hurd. Closes: #716653

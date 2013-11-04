@@ -18,6 +18,11 @@
 	#include <net/if.h>
 #endif
 
+#if defined(__APPLE__)
+	#define s6_addr16 __u6_addr.__u6_addr16
+	#include <net/if.h>
+#endif
+
 #include <netinet/in.h>
 #include <errno.h>
 #include <fcntl.h>

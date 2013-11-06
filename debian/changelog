@@ -2,6 +2,9 @@ moreutils (0.51) UNRELEASED; urgency=low
 
   * Fix ifdata to build on OS X. Thanks, Peter Eisentraut
     Closes: #575294
+  * use docbook-xsl for building man pages. Thanks, Peter Eisentraut
+    for extensive patch set!
+    Closes: #728831
 
  -- Joey Hess <joeyh@debian.org>  Mon, 04 Nov 2013 12:28:04 -0400
 

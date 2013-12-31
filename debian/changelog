@@ -5,6 +5,8 @@ moreutils (0.51) UNRELEASED; urgency=low
   * use docbook-xsl for building man pages. Thanks, Peter Eisentraut
     for extensive patch set!
     Closes: #728831
+  * Fix ifdata, ifne, parallel to build on illumos. Thanks, Gabriele Giacone
+    Closes: #733736
 
  -- Joey Hess <joeyh@debian.org>  Mon, 04 Nov 2013 12:28:04 -0400
 

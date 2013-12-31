@@ -23,6 +23,10 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <string.h>
+#ifdef __sun
+#include <signal.h> /* raise() */
+#endif
+
 #define streq(a, b) (!strcmp((a), (b)))
 
 static void stdin_to_stream(char *buf, ssize_t r, FILE *outf) {

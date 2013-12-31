@@ -32,6 +32,10 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+#ifdef __sun
+# include <sys/loadavg.h> /* getloadavg() */
+#endif
+
 #if !defined(WEXITED)
 #define WEXITED 0
 #endif

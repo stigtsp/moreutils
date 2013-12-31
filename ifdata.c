@@ -23,6 +23,12 @@
 	#include <net/if.h>
 #endif
 
+#if defined(__sun)
+   #define s6_addr16 _S6_un._S6_u8
+   #include <net/if.h>
+   #include <sys/sockio.h>
+#endif
+
 #include <netinet/in.h>
 #include <errno.h>
 #include <fcntl.h>

@@ -23,9 +23,7 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <string.h>
-#ifdef __sun
-#include <signal.h> /* raise() */
-#endif
+#include <signal.h>
 
 #define streq(a, b) (!strcmp((a), (b)))
 

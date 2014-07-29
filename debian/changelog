@@ -1,3 +1,9 @@
+moreutils (0.52) UNRELEASED; urgency=medium
+
+  * Fix docbook markup for parallel examples. Closes: #756377
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 29 Jul 2014 11:45:39 -0400
+
 moreutils (0.51) unstable; urgency=low
 
   * Fix ifdata to build on OS X. Thanks, Peter Eisentraut

@@ -112,9 +112,7 @@ Written by Joey Hess
 		<title>EXAMPLE</title>
 		
 	<para>
-	<cmdsynopsis>
 		<command>parallel sh -c "echo hi; sleep 2; echo bye" -- 1 2 3</command>
-	</cmdsynopsis>
 	</para>
 
 	<para>This runs three subshells that each print a message, delay,
@@ -125,9 +123,7 @@ Written by Joey Hess
 	</para>
 		
 	<para>
-	<cmdsynopsis>
 		<command>parallel -j 3 ufraw -o processed -- *.NEF</command>
-	</cmdsynopsis>
 	</para>
 
 	<para>This runs three ufraw processes at the same time until
@@ -135,9 +131,7 @@ Written by Joey Hess
 	</para>
 	
 	<para>
-	<cmdsynopsis>
 		<command>parallel -j 3 -- ls df "echo hi"</command>
-	</cmdsynopsis>
 	</para>
 
 	<para>This runs three independent commands in parallel.</para>

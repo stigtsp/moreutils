@@ -6,7 +6,7 @@ ts - timestamp input
 
 =head1 SYNOPSIS
 
-ts [-r] [-i] [format]
+ts [-r] [-i | -s] [format]
 
 =head1 DESCRIPTION
 
@@ -27,8 +27,9 @@ dates is not supported.
 If both -r and a format is passed, the existing timestamps are
 converted to the specified format.
 
-If the -i switch is passed, ts timestamps incrementally instead.  Every
-timestamp will be the time elapsed since the last timestamp.
+If the -i or -s switch is passed, ts timestamps incrementally instead. In case
+of -i, every timestamp will be the time elapsed since the last timestamp. In
+case of -s, the time elapsed since start of the program is used.
 The default format changes to "%H:%M:%S", and "%.S" and "%.s" can be used
 as well.
 
@@ -53,8 +54,9 @@ $|=1;
 
 my $rel=0;
 my $inc=0;
+my $sincestart=0;
 use Getopt::Long;
-GetOptions("r" => \$rel, "i" => \$inc) || die "usage: ts [-r] [-i] [format]\n";
+GetOptions("r" => \$rel, "i" => \$inc, "s" => \$sincestart) || die "usage: ts [-r] [-i | -s] [format]\n";
 
 if ($rel) {
 	eval q{
@@ -66,7 +68,7 @@ if ($rel) {
 
 my $use_format=@ARGV;
 my $format="%b %d %H:%M:%S";
-if ($inc) {
+if ($inc || $sincestart) {
 	$format="%H:%M:%S";
 	$ENV{TZ}='GMT';
 }
@@ -94,15 +96,17 @@ while (<>) {
 		if ($hires) {
 			my $f=$format;
 			my ($seconds, $microseconds) = Time::HiRes::gettimeofday();
-			if ($inc) {
+			if ($inc || $sincestart) {
 				my $deltaseconds = $seconds - $lastseconds;
 				my $deltamicroseconds = $microseconds - $lastmicroseconds;
 				if ($deltamicroseconds < 0) {
 					$deltaseconds -= 1;
 					$deltamicroseconds += 1000000;
 				}
-				$lastseconds = $seconds;
-				$lastmicroseconds = $microseconds;
+				if ($inc) {
+					$lastseconds = $seconds;
+					$lastmicroseconds = $microseconds;
+				}
 				$seconds = $deltaseconds;
 				$microseconds = $deltamicroseconds;
 			}
@@ -111,10 +115,12 @@ while (<>) {
 			print strftime($f, localtime($seconds));
 		}
 		else {
-			if ($inc) {
+			if ($inc || $sincestart) {
 				my $seconds = time;
 				my $deltaseconds = $seconds - $lastseconds;
-				$lastseconds = $seconds;
+				if ($inc) {
+					$lastseconds = $seconds;
+				}
 				print strftime($format, localtime($deltaseconds));
 			} else {
 				print strftime($format, localtime);

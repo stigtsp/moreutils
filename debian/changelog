@@ -1,8 +1,10 @@
-moreutils (0.52) UNRELEASED; urgency=medium
+moreutils (0.52) unstable; urgency=medium
 
   * Fix docbook markup for parallel examples. Closes: #756377
+  * ts: Add -s option to make timestamp relative to start.
+    Thanks, Adam Juraszek.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 29 Jul 2014 11:45:39 -0400
+ -- Joey Hess <joeyh@debian.org>  Tue, 09 Sep 2014 14:12:05 -0400
 
 moreutils (0.51) unstable; urgency=low
 

@@ -1,10 +1,10 @@
-moreutils (0.54) UNRELEASED; urgency=medium
+moreutils (0.54) unstable; urgency=medium
 
   * vidir: Fix bug in handling filenames that share a common
     prefix when renaming. Closes: #654326
     Thanks, Kushal Kumaran
 
- -- Joey Hess <joeyh@debian.org>  Mon, 10 Nov 2014 12:17:44 -0400
+ -- Joey Hess <id@joeyh.name>  Fri, 28 Nov 2014 11:25:32 -0400
 
 moreutils (0.53) unstable; urgency=medium
 

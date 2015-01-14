@@ -48,7 +48,7 @@ USA
 
 	<refsynopsisdiv>
 		<cmdsynopsis>
-			<command>sed '...' file | grep '...' | sponge file</command>
+			<command>sed '...' file | grep '...' | sponge [-a] file</command>
 		</cmdsynopsis>
 	</refsynopsisdiv>
 
@@ -71,6 +71,22 @@ USA
 		<para>If no output file is specified, sponge outputs to
 			stdout.</para>
 
+	</refsect1>
+
+	<refsect1>
+		<title>OPTIONS</title>
+
+		<variablelist>
+
+		<varlistentry>
+			<term><option>-a</option></term>
+			<listitem>
+				<para>Append the output to the specified file
+				instead possible backup and re-creation.</para>
+			</listitem>
+		</varlistentry>
+
+		</variablelist>
 	</refsect1>
 	
 	<refsect1>

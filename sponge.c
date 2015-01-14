@@ -42,7 +42,8 @@
 char *tmpname = NULL;
 
 void usage() {
-	printf("sponge <file>: soak up all input from stdin and write it to <file>\n");
+	printf("sponge [-a] <file>: soak up all input from stdin and write it "
+	       "to <file>\n");
 	exit(0);
 }
 
@@ -278,6 +279,12 @@ int main (int argc, char **argv) {
 	ssize_t i = 0;
 	size_t mem_available = default_sponge_size();
 	int tmpfile_used=0;
+	int append=0;
+
+	if ((argc == 3) && (!strcmp(argv[1], "-a"))) {
+		append = 1;
+		argc--,	argv++;
+	}
 
 	if (argc > 2 || (argc == 2 && strcmp(argv[1], "-h") == 0)) {
 		usage();
@@ -342,6 +349,7 @@ int main (int argc, char **argv) {
 		/* If it's a regular file, or does not yet exist,
 		 * attempt a fast rename of the temp file. */
 		if (((exists &&
+		      !append &&
 		      S_ISREG(statbuf.st_mode) &&
 		      ! S_ISLNK(statbuf.st_mode)
 		     ) || ! exists) &&
@@ -350,7 +358,7 @@ int main (int argc, char **argv) {
 		}
 		else {	
 			/* Fall back to slow copy. */
-			outfile = fopen(outname, "w");
+			outfile = fopen(outname, append ? "a" : "w");
 			if (!outfile) {
 				perror("error opening output file");
 				exit(1);

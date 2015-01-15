@@ -147,6 +147,19 @@ Written by Joey Hess
 	exits nonzero, <command>parallel</command> as a whole will exit nonzero.)</para>
 		
 	</refsect1>
+
+	<refsect1>
+		<title>NOTES</title>
+
+	<para>
+		All output to stdout and stderr is serialised through a
+		corresponding internal pipe, in order to prevent annoying
+		concurrent output behaviour.  Note that serialisation is not
+		done on any other file descriptor and file position based
+		access might result in a "loss" of data.
+	</para>
+
+	</refsect1>
 	
 	<refsect1>
 		<title>AUTHOR</title>

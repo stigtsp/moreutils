@@ -1,3 +1,9 @@
+moreutils (0.55) UNRELEASED; urgency=medium
+
+  * parallel: serialise output through internal pipe. Closes: #704125
+
+ -- Joey Hess <id@joeyh.name>  Mon, 19 Jan 2015 12:58:03 -0400
+
 moreutils (0.54) unstable; urgency=medium
 
   * vidir: Fix bug in handling filenames that share a common

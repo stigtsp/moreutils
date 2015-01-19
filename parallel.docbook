@@ -155,8 +155,9 @@ Written by Joey Hess
 		All output to stdout and stderr is serialised through a
 		corresponding internal pipe, in order to prevent annoying
 		concurrent output behaviour.  Note that serialisation is not
-		done on any other file descriptor and file position based
-		access might result in a "loss" of data.
+		done on any other file descriptors and file position based
+		access to a nonstandard file descriptor might have unexpected
+		results.
 	</para>
 
 	</refsect1>

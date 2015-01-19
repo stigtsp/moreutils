@@ -209,21 +209,25 @@ static void write_buff_out (char* buff, size_t length, FILE *fd) {
 	}
 }
 
-static void copy_tmpfile (FILE *tmpfile, FILE *outfile, char *buf, size_t size) {
+static void copy_file (FILE *infile, FILE *outfile, char *buf, size_t size) {
 	ssize_t i;
-	if (lseek(fileno(tmpfile), 0, SEEK_SET)) {
-		perror("could to seek to start of temporary file");
-		fclose(tmpfile);
-		exit(1);
-	}
-	while ((i = read(fileno(tmpfile), buf, size)) > 0) {
+	while ((i = read(fileno(infile), buf, size)) > 0) {
 		write_buff_out(buf, i, outfile);
 	}
 	if (i == -1) {
-		perror("read temporary file");
+		perror("read file");
+		fclose(infile);
+		exit(1);
+	}
+}
+
+static void copy_tmpfile (FILE *tmpfile, FILE *outfile, char *buf, size_t size) {
+	if (lseek(fileno(tmpfile), 0, SEEK_SET)) {
+		perror("could to seek to start of file");
 		fclose(tmpfile);
 		exit(1);
 	}
+	copy_file(tmpfile, outfile, buf, size);
 	if (fclose(tmpfile) != 0) {
 		perror("read temporary file");
 		exit(1);
@@ -329,6 +333,18 @@ int main (int argc, char **argv) {
 		mode_t mode;
 		struct stat statbuf;
 		int exists = (lstat(outname, &statbuf) == 0);
+		int regfile = exists && S_ISREG(statbuf.st_mode) && ! S_ISLNK(statbuf.st_mode);
+
+		if (append && regfile) {
+			char *tmpbuf = malloc(bufsize);
+			if (!tmpbuf) {
+				perror("failed to allocate memory");
+				exit(1);
+			}
+			outfile = fopen(outname, "r");
+			copy_file(outfile, tmpfile, tmpbuf, bufsize);
+			fclose(outfile);
+		}
 		
 		write_buff_tmp_finish(bufstart, bufused, tmpfile);
 
@@ -350,11 +366,7 @@ int main (int argc, char **argv) {
 
 		/* If it's a regular file, or does not yet exist,
 		 * attempt a fast rename of the temp file. */
-		if (((exists &&
-		      !append &&
-		      S_ISREG(statbuf.st_mode) &&
-		      ! S_ISLNK(statbuf.st_mode)
-		     ) || ! exists) &&
+		if ((regfile || ! exists) &&
 		    rename(tmpname, outname) == 0) {
 			tmpname=NULL; /* don't try to cleanup tmpname */
 		}

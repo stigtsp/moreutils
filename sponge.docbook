@@ -82,7 +82,8 @@ USA
 			<term><option>-a</option></term>
 			<listitem>
 				<para>Append the output to the specified file
-				instead possible backup and re-creation.</para>
+					instead of the default behavior of
+					overwriting the file.</para>
 			</listitem>
 		</varlistentry>
 

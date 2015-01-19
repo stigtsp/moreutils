@@ -34,6 +34,7 @@
 /* SIZE_MAX */
 #include <stdint.h> 
 #include <signal.h>
+#include <getopt.h>
 
 #include "physmem.c"
 
@@ -280,19 +281,20 @@ int main (int argc, char **argv) {
 	size_t mem_available = default_sponge_size();
 	int tmpfile_used=0;
 	int append=0;
+	int opt;
 
-	if ((argc == 3) && (!strcmp(argv[1], "-a"))) {
-		append = 1;
-		argc--,	argv++;
+	while ((opt = getopt(argc, argv, "ha")) != -1) {
+		switch (opt) {
+			case 'h':
+				usage();
+				break;
+			case 'a':
+				append=1;
+		}
 	}
-
-	if (argc > 2 || (argc == 2 && strcmp(argv[1], "-h") == 0)) {
-		usage();
-	}
-	if (argc == 2) {
-		outname = argv[1];
-	}
-				
+	if (optind < argc)
+		outname = argv[optind];
+	
 	tmpfile = open_tmpfile();
 	bufstart = buf = malloc(bufsize);
 	if (!buf) {

@@ -1,6 +1,9 @@
 moreutils (0.55) UNRELEASED; urgency=medium
 
   * parallel: serialise output through internal pipe. Closes: #704125
+    Thanks, Nicolas Schier.
+  * sponge: add append option '-a'. Closes: #623197
+    Thanks, Nicolas Schier.
 
  -- Joey Hess <id@joeyh.name>  Mon, 19 Jan 2015 12:58:03 -0400
 

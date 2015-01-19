@@ -60,17 +60,22 @@ USA
 			redirect, sponge soaks up all its input before
 			opening the output file. This allows constructing
 			pipelines that read from and write to
-			the same file.</para>
+			the same file.
+		</para>
 		<para>
 			It also creates the output file
 			atomically by renaming a temp file into place,
 			and preserves the permissions of the output file
 			if it already exists.
+		</para>
+		<para>
 			If the output file is a special file or symlink,
-			the data will be written to it.</para>
-		<para>If no output file is specified, sponge outputs to
-			stdout.</para>
-
+			the data will be written to it, non-atomically.
+		</para>
+		<para>
+			If no output file is specified, sponge outputs to
+			stdout.
+		</para>
 	</refsect1>
 
 	<refsect1>
@@ -81,9 +86,13 @@ USA
 		<varlistentry>
 			<term><option>-a</option></term>
 			<listitem>
-				<para>Append the output to the specified file
-					instead of the default behavior of
-					overwriting the file.</para>
+				<para>
+					Atomically replace the file
+					with a new file that contains
+					the file's original content,
+					with the sponged standard input
+					appended to it.
+				</para>
 			</listitem>
 		</varlistentry>
 

@@ -1,9 +1,9 @@
-moreutils (0.57) UNRELEASED; urgency=medium
+moreutils (0.57) unstable; urgency=medium
 
   * Avoid using non-portable error() in ifdata, a portability reversion
     introduced in 0.56.
 
- -- Joey Hess <id@joeyh.name>  Mon, 13 Jul 2015 16:32:45 -0400
+ -- Joey Hess <id@joeyh.name>  Mon, 13 Jul 2015 18:29:06 -0400
 
 moreutils (0.56) unstable; urgency=medium
 

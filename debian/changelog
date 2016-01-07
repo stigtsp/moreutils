@@ -1,3 +1,10 @@
+moreutils (0.58) UNRELEASED; urgency=medium
+
+  * OpenBSD compile fix.
+    Thanks, Michael Reed.
+
+ -- Joey Hess <id@joeyh.name>  Thu, 07 Jan 2016 18:27:55 -0400
+
 moreutils (0.57) unstable; urgency=medium
 
   * Avoid using non-portable error() in ifdata, a portability reversion

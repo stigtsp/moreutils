@@ -1,3 +1,12 @@
+moreutils (0.59) UNRELEASED; urgency=medium
+
+  * Makefile: add DOCBOOKXSL setting.
+    Thanks, Kevin Bullock
+  * parallel: include signal.h to fix warning when building with clang
+    Thanks, Kevin Bullock
+
+ -- Joey Hess <id@joeyh.name>  Wed, 23 Mar 2016 11:48:12 -0400
+
 moreutils (0.58) unstable; urgency=medium
 
   * OpenBSD compile fix.

@@ -53,11 +53,10 @@ use warnings;
 use strict;
 use IPC::Run qw( start pump finish timeout );
 use Getopt::Std;
-use feature qw(say);
 
-our($opt_e, $opt_v);
-$opt_e = $opt_v = 0;
-getopts('ev');
+our $opt_e = 0;
+our $opt_v = 0;
+getopts('ev'); # only looks at options before the COMMAND
 
 if (! @ARGV) {
 	die "usage: chronic COMMAND...\n";
@@ -85,9 +84,9 @@ else {
 }
 
 sub showout {
-	$opt_v && print "STDOUT:\n";
+	print "STDOUT:\n" if $opt_v;
 	print STDOUT $out;
-	$opt_v && print "\nSTDERR:\n";
+	print "\nSTDERR:\n" if $opt_v;
 	print STDERR $err;
-	$opt_v && print "\nRETVAL: ".($ret >> 8)."\n";
+	print "\nRETVAL: ".($ret >> 8)."\n" if $opt_v;
 }

@@ -4,6 +4,10 @@ moreutils (0.59) UNRELEASED; urgency=medium
     Thanks, Kevin Bullock
   * parallel: include signal.h to fix warning when building with clang
     Thanks, Kevin Bullock
+  * chronic: Added -v option for more verbose output.
+    Thanks, Tomas Mudrunka
+  * chronic: Added -e option to display any stderr.
+    Thanks, Tomas Mudrunka
 
  -- Joey Hess <id@joeyh.name>  Wed, 23 Mar 2016 11:48:12 -0400
 

@@ -1,3 +1,10 @@
+moreutils (0.60) UNRELEASED; urgency=medium
+
+  * Support bullding in Cygwin.
+    Thanks, StalkR
+
+ -- Joey Hess <id@joeyh.name>  Fri, 15 Jul 2016 16:19:47 -0400
+
 moreutils (0.59) unstable; urgency=medium
 
   * Makefile: add DOCBOOKXSL setting.

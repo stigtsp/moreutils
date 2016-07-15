@@ -27,6 +27,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <fcntl.h>
 #include <sys/select.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -113,6 +114,60 @@ void exec_child(char **command, char **arguments, int replace_cb, int nargs,
 	return;
 }
 
+#if defined(__CYGWIN__)
+typedef enum {
+	P_ALL,
+	P_PID,
+	P_PGID
+} idtype_t;
+int waitid(idtype_t idtype, id_t id, siginfo_t *infop, int options) {
+	pid_t pid;
+	switch (idtype) {
+		case P_PID:
+			pid = id;
+			break;
+		case P_PGID:
+			pid = -id;
+			break;
+		case P_ALL:
+			pid = -1;
+			break;
+		default:
+			errno = EINVAL;
+			return -1;
+	}
+	int status;
+	pid = waitpid(pid, &status, WEXITED | options);
+	if (pid == -1) {
+		return -1;
+	}
+	infop->si_pid = pid;
+	infop->si_signo = SIGCHLD;
+	if (WIFEXITED(status)) {
+		infop->si_code = CLD_EXITED;
+		infop->si_status = WEXITSTATUS(status);
+	}
+	else if (WIFSIGNALED(status)) {
+		infop->si_code = CLD_KILLED;
+		infop->si_status = WTERMSIG(status);
+#ifdef WCOREDUMP
+		if (WCOREDUMP(status)) {
+			infop->si_code = CLD_DUMPED;
+		}
+#endif
+	}
+	else if (WIFSTOPPED(status)) {
+		infop->si_code = CLD_STOPPED;
+		infop->si_status = WSTOPSIG(status);
+	}
+	else if (WIFCONTINUED(status)) {
+		infop->si_code = CLD_CONTINUED;
+		infop->si_status = SIGCONT;
+	}
+	return 0;
+}
+#endif
+
 int wait_for_child(int options) {
 	id_t id_ignored = 0;
 	siginfo_t infop;
@@ -185,6 +240,33 @@ pid_t create_pipe_child(int *fd, int orig_fd)
 
 	return pipe_child(fds[0], orig_fd);
 }
+
+#if defined(__CYGWIN__)
+int getloadavg(double loadavg[], int nelem) {
+	int fd, n, elem;
+	char buf[128];
+	char const* p = buf;
+	fd = open("/proc/loadavg", O_RDONLY);
+	if (fd == -1) {
+		return -1;
+	}
+	n = read(fd, buf, sizeof(buf)-1);
+	if (close(fd) == -1 || n == -1) {
+		return -1;
+	}
+	buf[n] = '\0';
+	for (elem = 0; elem < nelem; elem++) {
+		char* end;
+		double d = strtod(p, &end);
+		if (p == end) {
+			break;
+		}
+		loadavg[elem] = d;
+		p = end;
+	}
+	return elem == 0 ? -1 : elem;
+}
+#endif
 
 int main(int argc, char **argv) {
 	int maxjobs = -1;

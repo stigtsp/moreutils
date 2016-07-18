@@ -5,9 +5,9 @@ Files: *
 Copyright: 2006-2015 Joey Hess <id@joeyh.name>
 License: GPL-2+
 
-Files: isutf8.*
-Copyright: 2005 Lars Wirzenius
-License: GPL-2+
+Files: is_utf8/*
+Copyright: 2016 Julien Palard
+License: FreeBSD License
 
 Files: sponge.*
 Copyright: 2006 Tollef Fog Heen

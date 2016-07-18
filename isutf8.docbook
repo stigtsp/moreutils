@@ -26,14 +26,18 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 <refentry>
 	<refentryinfo>
-		<address>
-			<email>liw@iki.fi</email>
-		</address>
-		<author>
-			<firstname>Lars</firstname>
-			<surname>Wirzenius</surname>
-		</author>
-		<date>2006-02-19</date>
+		<authorgroup>
+			<author>
+				<firstname>Lars</firstname>
+				<surname>Wirzenius</surname>
+				<email>liw@iki.fi</email>
+			</author>
+			<author>
+				<firstname>Julien</firstname>
+				<surname>Palard</surname>
+				<email>julien@palard.fr</email>
+			</author>
+		</authorgroup>
 	</refentryinfo>
 
 	<refmeta>
@@ -51,9 +55,12 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	<refsynopsisdiv>
 		<cmdsynopsis>
 			<command>isutf8</command>
-			<arg><option>-hq</option></arg>
+			<arg><option>-hqliv</option></arg>
 			<arg><option>--help</option></arg>
 			<arg><option>--quiet</option></arg>
+			<arg><option>--list</option></arg>
+			<arg><option>--invert</option></arg>
+			<arg><option>--verbose</option></arg>
 			<group choice="opt">
 					<arg rep="repeat"><replaceable>file</replaceable></arg>
 			</group>
@@ -92,7 +99,34 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 				status.</para>
 			</listitem>
 		</varlistentry>
-		
+
+		<varlistentry>
+			<term><option>-l</option></term>
+			<term><option>--list</option></term>
+			<listitem>
+				<para>Print only the names of files containing invalid
+				UTF-8.</para>
+			</listitem>
+		</varlistentry>
+
+		<varlistentry>
+			<term><option>-i</option></term>
+			<term><option>--invert</option></term>
+			<listitem>
+				<para>Invert the selection: list UTF-8 compatible
+				files.</para>
+			</listitem>
+		</varlistentry>
+
+		<varlistentry>
+			<term><option>-v</option></term>
+			<term><option>--verbose</option></term>
+			<listitem>
+				<para>Also print an hexdump-like view of the error and some
+				context.</para>
+			</listitem>
+		</varlistentry>
+
 		</variablelist>
 		
 	</refsect1>
@@ -110,7 +144,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		<title>AUTHOR</title>
 
 		<para>
-			Lars Wirzenius
+			Lars Wirzenius, Julien Palard
 		</para>
 	</refsect1>
 	

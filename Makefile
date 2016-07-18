@@ -18,16 +18,20 @@ all: $(BINS) $(MANS)
 clean:
 	rm -f $(BINS) $(MANS) dump.c errnos.h errno.o
 
+isutf8:
+	$(MAKE) -C is_utf8/
+	cp is_utf8/isutf8 .
+
 install:
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	$(INSTALL_BIN) $(BINS) $(DESTDIR)$(PREFIX)/bin
 	install $(PERLSCRIPTS) $(DESTDIR)$(PREFIX)/bin
-	
+
 	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man1
 	install $(MANS) $(DESTDIR)$(PREFIX)/share/man/man1
 
 check: isutf8
-	./check-isutf8
+	./is_utf8/test.sh
 
 %.1: %.docbook
 	xmllint --noout --valid $<

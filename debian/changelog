@@ -1,5 +1,15 @@
 moreutils (0.60) UNRELEASED; urgency=medium
 
+  * New implementation of isutf8 by Julien Palard.
+    - Noncharacters (ending with 0xFFFF and 0xFFFE) were considered
+      invalid when encoded in utf8, according to the unicode standard
+      they are valid: "However, they are not illegal in interchange, nor
+      does their presence cause Unicode text to be ill-formed."
+    - \xf4\xbf\xbf\xbf was considered valid UTF8, which is not: after
+      0xF4 the following byte should be between 80 and 8F.
+    - This implementation does not try to decode the stream, so it checks
+      it faster.
+    - Add --list option. Closes: #691330
   * Support bullding in Cygwin.
     Thanks, StalkR
 

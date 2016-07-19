@@ -18,7 +18,7 @@ all: $(BINS) $(MANS)
 clean:
 	rm -f $(BINS) $(MANS) dump.c errnos.h errno.o
 
-isutf8:
+isutf8: is_utf8/*.c is_utf8/*.h
 	$(MAKE) -C is_utf8/
 	cp is_utf8/isutf8 .
 

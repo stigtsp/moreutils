@@ -5,7 +5,7 @@ CFLAGS?=-O2 -g -Wall
 INSTALL_BIN?=install -s
 PREFIX?=/usr
 
-ifeq ($(shell uname -o),Cygwin)
+ifneq (,$(findstring CYGWIN,$(shell uname)))
 	DOCBOOKXSL?=/usr/share/sgml/docbook/xsl-stylesheets
 else
 	DOCBOOKXSL?=/usr/share/xml/docbook/stylesheet/docbook-xsl

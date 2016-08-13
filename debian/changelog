@@ -1,4 +1,4 @@
-moreutils (0.60) UNRELEASED; urgency=medium
+moreutils (0.60) unstable; urgency=medium
 
   * New implementation of isutf8 by Julien Palard.
     - Noncharacters (ending with 0xFFFF and 0xFFFE) were considered
@@ -12,8 +12,10 @@ moreutils (0.60) UNRELEASED; urgency=medium
     - Add --list option. Closes: #691330
   * Support bullding in Cygwin.
     Thanks, StalkR
+  * OSX build fix.
+    Thanks, Tony Kelman.
 
- -- Joey Hess <id@joeyh.name>  Fri, 15 Jul 2016 16:19:47 -0400
+ -- Joey Hess <id@joeyh.name>  Fri, 12 Aug 2016 19:15:57 -0400
 
 moreutils (0.59) unstable; urgency=medium
 

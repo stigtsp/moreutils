@@ -1,3 +1,10 @@
+moreutils (0.61) UNRELEASED; urgency=medium
+
+  * chronic: Flush output more often to better preserve stdout,err ordering.
+    Thanks, Miroslav Šustek
+
+ -- Joey Hess <id@joeyh.name>  Mon, 17 Oct 2016 11:47:32 -0400
+
 moreutils (0.60) unstable; urgency=medium
 
   * New implementation of isutf8 by Julien Palard.

@@ -86,7 +86,9 @@ else {
 sub showout {
 	print "STDOUT:\n" if $opt_v;
 	print STDOUT $out;
+	STDOUT->flush();
 	print "\nSTDERR:\n" if $opt_v;
 	print STDERR $err;
+	STDERR->flush();
 	print "\nRETVAL: ".($ret >> 8)."\n" if $opt_v;
 }

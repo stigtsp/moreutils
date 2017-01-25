@@ -1,8 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <errno.h>
 
 /* Licensed under the GPL
  * Copyright (c) Miek Gieben, 2006
@@ -76,11 +78,22 @@ main(int argc, char **argv) {
 
 			exit(EXIT_FAILURE);
 		}
+
+		setbuf(pipes[i - 1], NULL);
 	}
 	argc--;
 
-	while(!feof(stdin) && (!ferror(stdin))) {
-		r = fread(buf, sizeof(char), BUFSIZ, stdin);
+	for (;;) {
+		r = read(STDIN_FILENO, buf, BUFSIZ);
+
+		/* Interrupted by signal? Try again. */
+		if (r == -1 && errno == EINTR)
+			continue;
+		
+		/* Other error or EOF. */
+		if (r < 1)
+			break;
+		
 		for(i = 0; i < argc; i++) {
 			if (inactive_pipe[i])
 				continue;

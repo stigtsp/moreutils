@@ -1,9 +1,9 @@
-moreutils (0.61) UNRELEASED; urgency=medium
+moreutils (0.61) unstable; urgency=medium
 
   * chronic: Flush output more often to better preserve stdout,err ordering.
     Thanks, Miroslav Šustek
 
- -- Joey Hess <id@joeyh.name>  Mon, 17 Oct 2016 11:47:32 -0400
+ -- Joey Hess <id@joeyh.name>  Wed, 19 Apr 2017 10:23:11 -0400
 
 moreutils (0.60) unstable; urgency=medium
 

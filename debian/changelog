@@ -1,3 +1,10 @@
+moreutils (0.62) UNRELEASED; urgency=medium
+
+  * ts: Add -m option to use monotonic clock.
+    Thanks, Ben Leinweber
+
+ -- Joey Hess <id@joeyh.name>  Mon, 30 Oct 2017 12:49:18 -0400
+
 moreutils (0.61) unstable; urgency=medium
 
   * chronic: Flush output more often to better preserve stdout,err ordering.

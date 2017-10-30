@@ -56,8 +56,9 @@ $|=1;
 my $rel=0;
 my $inc=0;
 my $sincestart=0;
+my $mono=0;
 use Getopt::Long;
-GetOptions("r" => \$rel, "i" => \$inc, "s" => \$sincestart) || die "usage: ts [-r] [-i | -s] [format]\n";
+GetOptions("r" => \$rel, "i" => \$inc, "s" => \$sincestart, "m" => \$mono) || die "usage: ts [-r] [-i | -s] [format]\n";
 
 if ($rel) {
 	eval q{
@@ -77,15 +78,19 @@ $format=shift if @ARGV;
 
 # For subsecond resolution, Time::HiRes is needed.
 my $hires=0;
-if ($format=~/\%\.[Ss]/) {
+if ($format=~/\%\.[Ss]/ || $mono) {
 	require Time::HiRes;
+	use Time::HiRes qw(CLOCK_MONOTONIC);
 	$hires=1;
 }
 
 my $lastseconds = 0;
 my $lastmicroseconds = 0;
 
-if ($hires) {
+if ($mono) {
+	($lastseconds, $lastmicroseconds) =
+			Time::HiRes::clock_gettime(CLOCK_MONOTONIC);
+} elsif ($hires) {
 	($lastseconds, $lastmicroseconds) = Time::HiRes::gettimeofday();
 } else {
 	$lastseconds = time;
@@ -96,7 +101,16 @@ while (<>) {
 	if (! $rel) {
 		if ($hires) {
 			my $f=$format;
-			my ($seconds, $microseconds) = Time::HiRes::gettimeofday();
+			my ($seconds, $microseconds);
+			if ($mono) {
+				my $raw_time =
+					Time::HiRes::clock_gettime(CLOCK_MONOTONIC);
+				$seconds = int($raw_time);
+				$microseconds = $raw_time - $seconds;
+				print "$raw_time $seconds $microseconds\n";
+			} else {
+				($seconds, $microseconds) = Time::HiRes::gettimeofday();
+			}
 			if ($inc || $sincestart) {
 				my $deltaseconds = $seconds - $lastseconds;
 				my $deltamicroseconds = $microseconds - $lastmicroseconds;

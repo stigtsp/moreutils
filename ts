@@ -92,7 +92,8 @@ if ($mono) {
 			Time::HiRes::clock_gettime(CLOCK_MONOTONIC);
 } elsif ($hires) {
 	($lastseconds, $lastmicroseconds) = Time::HiRes::gettimeofday();
-} else {
+}
+else {
 	$lastseconds = time;
 }
 
@@ -108,7 +109,8 @@ while (<>) {
 				$seconds = int($raw_time);
 				$microseconds = $raw_time - $seconds;
 				print "$raw_time $seconds $microseconds\n";
-			} else {
+			}
+			else {
 				($seconds, $microseconds) = Time::HiRes::gettimeofday();
 			}
 			if ($inc || $sincestart) {
@@ -137,7 +139,8 @@ while (<>) {
 					$lastseconds = $seconds;
 				}
 				print strftime($format, localtime($deltaseconds));
-			} else {
+			}
+			else {
 				print strftime($format, localtime);
 			}
 		}

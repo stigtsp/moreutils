@@ -33,6 +33,8 @@ case of -s, the time elapsed since start of the program is used.
 The default format changes to "%H:%M:%S", and "%.S" and "%.s" can be used
 as well.
 
+The -m switch makes the system's monotonic clock be used.
+
 =head1 ENVIRONMENT
 
 The standard TZ environment variable controls what time zone dates
@@ -58,7 +60,12 @@ my $inc=0;
 my $sincestart=0;
 my $mono=0;
 use Getopt::Long;
-GetOptions("r" => \$rel, "i" => \$inc, "s" => \$sincestart, "m" => \$mono) || die "usage: ts [-r] [-i | -s] [format]\n";
+GetOptions(
+	"r" => \$rel,
+	"i" => \$inc,
+	"s" => \$sincestart,
+	"m" => \$mono
+) || die "usage: ts [-r] [-i | -s] [-m] [format]\n";
 
 if ($rel) {
 	eval q{

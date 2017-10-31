@@ -93,11 +93,13 @@ if ($format=~/\%\.[Ss]/ || $mono) {
 
 my $lastseconds = 0;
 my $lastmicroseconds = 0;
+my $monodelta;
 
 if ($mono) {
 	my $raw_time = Time::HiRes::clock_gettime(CLOCK_MONOTONIC);
-	$lastseconds = int($raw_time);
-	$lastmicroseconds = int(1000000 * ($raw_time - $lastseconds));
+	$lastseconds = time;
+	$lastmicroseconds = int(1000000 * ($raw_time - int($raw_time)));
+	$monodelta = time - int($raw_time);
 }
 elsif ($hires) {
 	($lastseconds, $lastmicroseconds) = Time::HiRes::gettimeofday();
@@ -116,7 +118,7 @@ while (<>) {
 			if ($mono) {
 				my $raw_time =
 					Time::HiRes::clock_gettime(CLOCK_MONOTONIC);
-				$seconds = int($raw_time);
+				$seconds = $monodelta + int($raw_time);
 				$microseconds = int(1000000 * ($raw_time - $seconds));
 			}
 			else {

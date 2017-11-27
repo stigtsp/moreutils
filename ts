@@ -14,9 +14,10 @@ ts adds a timestamp to the beginning of each line of input.
 
 The optional format parameter controls how the timestamp is formatted,
 as used by L<strftime(3)>. The default format is "%b %d %H:%M:%S". In
-addition to the regular strftime conversion specifications, "%.S" and "%.s"
-are like "%S" and "%s", but provide subsecond resolution
-(ie, "30.00001" and "1301682593.00001").
+addition to the regular strftime conversion specifications, 
+"%.S" and "%.s" and "%.T"
+are like "%S" and "%s" and "%T", but provide subsecond resolution
+(ie, "30.00001" and "1301682593.00001" and "1:15:30.00001").
 
 If the -r switch is passed, it instead converts existing timestamps in
 the input to relative times, such as "15m5s ago". Many common timestamp
@@ -85,7 +86,7 @@ $format=shift if @ARGV;
 
 # For subsecond resolution, Time::HiRes is needed.
 my $hires=0;
-if ($format=~/\%\.[Ss]/ || $mono) {
+if ($format=~/\%\.[SsT]/ || $mono) {
 	require Time::HiRes;
 	use Time::HiRes qw(CLOCK_MONOTONIC);
 	$hires=1;
@@ -140,7 +141,7 @@ while (<>) {
 				$microseconds = $deltamicroseconds;
 			}
 			my $s=sprintf("%06i", $microseconds);
-			$f=~s/\%\.([Ss])/%$1.$s/g;
+			$f=~s/\%\.([SsT])/%$1.$s/g;
 			print strftime($f, localtime($seconds));
 		}
 		else {

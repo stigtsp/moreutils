@@ -2,6 +2,8 @@ moreutils (0.62) UNRELEASED; urgency=medium
 
   * ts: Add -m option to use monotonic clock.
     Thanks, Ben Leinweber
+  * ts: Added %.T format like %T but with hi-res.
+    Thanks, Matt Koscica
 
  -- Joey Hess <id@joeyh.name>  Mon, 30 Oct 2017 12:49:18 -0400
 

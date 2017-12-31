@@ -4,6 +4,16 @@ moreutils (0.62) UNRELEASED; urgency=medium
     Thanks, Ben Leinweber
   * ts: Added %.T format like %T but with hi-res.
     Thanks, Matt Koscica
+  * pee: Ignore SIGPIPE and write errors caused by the command not
+    consuming all its input. Closes: #697052
+    Thanks, Ole Jørgen Brønner
+  * chronic: document return value semantics of -e option. Closes: #867167
+    Thanks, Daniel Shahaf
+  * vidir: reword man page to more explicit mention 'file' args.
+    Closes: #885221
+    Thanks, Daniel Shahaf
+  * pee: Don't buffer input, bringing behavior into line with tee.
+    Thanks, Sauerbeck Tilman
 
  -- Joey Hess <id@joeyh.name>  Mon, 30 Oct 2017 12:49:18 -0400
 

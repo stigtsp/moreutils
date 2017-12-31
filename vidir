@@ -2,16 +2,16 @@
 
 =head1 NAME
 
-vidir - edit directory
+vidir - edit directories and filenames
 
 =head1 SYNOPSIS
 
-B<vidir> [--verbose] [directory|file|-] ...
+B<vidir> [B<--verbose>] [I<directory>|I<file>|B<->]...
 
 =head1 DESCRIPTION
 
-vidir allows editing of the contents of a directory in a text editor. If no
-directory is specified, the current directory is edited. 
+B<vidir> allows editing of directories and filenames in a text editor.  If no
+I<directory> is specified, the filenames of the current directory are edited.
 
 When editing a directory, each item in the directory will appear on its own
 numbered line. These numbers are how vidir keeps track of what items are
@@ -19,9 +19,10 @@ changed. Delete lines to remove files from the directory, or
 edit filenames to rename files. You can also switch pairs of numbers to
 swap filenames.
 
-Note that if "-" is specified as the directory to edit, it reads a list of
-filenames from stdin and displays those for editing. Alternatively, a list
-of files can be specified on the command line.
+Filenames to be edited may be given any combination of I<directory>s (which
+will be expanded to the non-recursive list of all files within I<directory>),
+I<file>s, or I<->.  If the latter is specified, B<vidir> reads a list of
+filenames from stdin and displays those for editing.
 
 =head1 OPTIONS
 

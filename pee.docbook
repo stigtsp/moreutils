@@ -33,7 +33,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 			<firstname>Joey</firstname>
 			<surname>Hess</surname>
 		</author>
-		<date>2006-03-14</date>
+		<date>2016-12-20</date>
 	</refentryinfo>
 
 	<refmeta>
@@ -51,6 +51,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 	<refsynopsisdiv>
 		<cmdsynopsis>
 			<command>pee</command>
+			<arg>--[no-]ignore-sigpipe</arg>
+			<arg>--[no-]ignore-write-errors</arg>
 			<group choice="opt">
 				<arg rep="repeat"><replaceable>"command"</replaceable></arg>
 			</group>
@@ -70,6 +72,41 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		to stdout, like tee does. If that is desired, use 
 		<command>pee cat ...</command></para>
 	</refsect1>
+
+	<refsect1>
+		<title>OPTIONS</title>
+
+		<variablelist>
+		    <varlistentry>
+			<term><option>--ignore-sigpipe</option></term>
+			<term><option>--no-ignore-sigpipe</option></term>
+			<listitem>
+			    <para>Do (not) ignore SIGPIPE.  Any command started
+			    by <command>pee</command> might cause a SIGPIPE
+			    when it exists.  If you ignore SIGPIPE, you
+			    probably also want to ignore write errors (see
+			    below).  Ignoring SIGPIPE is the default
+			    behaviour.</para>
+			</listitem>
+		    </varlistentry>
+
+		    <varlistentry>
+			<term><option>--ignore-write-errors</option></term>
+			<term><option>--no-ignore-write-errors</option></term>
+			<listitem>
+			    <para>Do (not) ignore write errors.  When a command
+			    started by <command>pee</command> is no more
+			    accepting data via the pipe between itself and
+			    <command>pee</command>, a write error occurs in
+			    <command>pee</command>.  If this error is not
+			    ignored, <command>pee</command> is going to
+			    terminate all child processes and exists.  Ignoring
+			    write errors is the default behaviour.</para>
+			</listitem>
+		    </varlistentry>
+
+		</variablelist>
+	</refsect1>
 	
 	<refsect1>
 		<title>SEE ALSO</title>
@@ -77,6 +114,9 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 		<para>
 			<citerefentry>
 				<refentrytitle>tee</refentrytitle><manvolnum>1</manvolnum>
+			</citerefentry>,
+			<citerefentry>
+				<refentrytitle>pipe</refentrytitle><manvolnum>7</manvolnum>
 			</citerefentry>
 		</para>
 		

@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -28,12 +29,43 @@ close_pipes(FILE **p, size_t i)
 
 int
 main(int argc, char **argv) {
+	int ignore_write_error = 1;
+	int ignore_sigpipe = 1;
 	size_t i, r;
 	FILE **pipes;
+	int *inactive_pipe;
+	int inactive_pipes = 0;
 	char buf[BUFSIZ];
 
+	while(argc > 1) {
+		if (!strcmp(argv[1], "--no-ignore-sigpipe")) {
+			argc--, argv++;
+			ignore_sigpipe = 0;
+			continue;
+		} else if (!strcmp(argv[1], "--ignore-sigpipe")) {
+			argc--, argv++;
+			ignore_sigpipe = 1;
+			continue;
+		} else if (!strcmp(argv[1], "--no-ignore-write-errors")) {
+			argc--, argv++;
+			ignore_write_error = 0;
+			continue;
+		} else if (!strcmp(argv[1], "--ignore-write-errors")) {
+			argc--, argv++;
+			ignore_write_error = 1;
+			continue;
+		}
+		break;
+	}
+
+	if (ignore_sigpipe && (signal(SIGPIPE, SIG_IGN) == SIG_ERR)) {
+		fprintf(stderr, "Unable to ignore SIGPIPE\n");
+		exit(EXIT_FAILURE);
+	}
+
 	pipes = malloc(((argc - 1) * sizeof *pipes));
-	if (!pipes) 
+	inactive_pipe = calloc((argc - 1), (sizeof *inactive_pipe));
+	if (!pipes || !inactive_pipe)
 		exit(EXIT_FAILURE);
 
 	for (i = 1; i < argc; i++) {
@@ -46,15 +78,28 @@ main(int argc, char **argv) {
 		}
 	}
 	argc--;
-	
+
 	while(!feof(stdin) && (!ferror(stdin))) {
 		r = fread(buf, sizeof(char), BUFSIZ, stdin);
 		for(i = 0; i < argc; i++) {
-			if (fwrite(buf, sizeof(char), r, pipes[i]) != r) {
-				fprintf(stderr, "Write error to `%s\'\n", argv[i + 1]);
+			if (inactive_pipe[i])
+				continue;
+
+			if (fwrite(buf, sizeof(char), r, pipes[i]) == r)
+				continue;
+
+			inactive_pipes++;
+
+			if (!ignore_write_error)
+				fprintf(stderr, "Write error to `%s\'\n",
+					argv[i + 1]);
+
+			if (!ignore_write_error || (inactive_pipes == argc)) {
 				close_pipes(pipes, argc);
 				exit(EXIT_FAILURE);
 			}
+
+			inactive_pipe[i] = 1;
 		}
 	}
 	exit(close_pipes(pipes, argc));

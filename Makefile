@@ -16,7 +16,8 @@ DOCBOOK2XMAN=xsltproc --param man.authors.section.enabled 0 $(DOCBOOKXSL)/manpag
 all: $(BINS) $(MANS)
 
 clean:
-	rm -f $(BINS) $(MANS) dump.c errnos.h errno.o
+	rm -f $(BINS) $(MANS) dump.c errnos.h errno.o \
+		is_utf8/*.o is_utf8/isutf8
 
 isutf8: is_utf8/*.c is_utf8/*.h
 	$(MAKE) -C is_utf8/

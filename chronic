@@ -36,6 +36,9 @@ Verbose output (distinguishes between STDOUT and STDERR, also reports RETVAL)
 Stderr triggering. Triggers output when stderr output length is non-zero.
 Without -e chronic needs non-zero return value to trigger output.
 
+In this mode, chronic's return value will be C<2> if the command's return
+value is C<0> but the command printed to stderr.
+
 =back
 
 =head1 AUTHOR

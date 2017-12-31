@@ -1,4 +1,4 @@
-moreutils (0.62) UNRELEASED; urgency=medium
+moreutils (0.62) unstable; urgency=medium
 
   * ts: Add -m option to use monotonic clock.
     Thanks, Ben Leinweber
@@ -15,7 +15,7 @@ moreutils (0.62) UNRELEASED; urgency=medium
   * pee: Don't buffer input, bringing behavior into line with tee.
     Thanks, Sauerbeck Tilman
 
- -- Joey Hess <id@joeyh.name>  Mon, 30 Oct 2017 12:49:18 -0400
+ -- Joey Hess <id@joeyh.name>  Sun, 31 Dec 2017 12:02:05 -0400
 
 moreutils (0.61) unstable; urgency=medium
 

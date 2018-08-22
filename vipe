@@ -41,9 +41,12 @@ use warnings;
 use strict;
 use File::Temp q{tempfile};
 
+warn "Could not change safe_level to File::Temp::HIGH"
+    unless File::Temp->safe_level(File::Temp::HIGH) == File::Temp::HIGH;
+
 $/=undef;
 
-my ($fh, $tmp)=tempfile();
+my ($fh, $tmp)= -w "/dev/shm/" ? tempfile(DIR => "/dev/shm/") : tempfile();
 die "cannot create tempfile" unless $fh;
 print ($fh <STDIN>) || die "write temp: $!";
 close $fh;

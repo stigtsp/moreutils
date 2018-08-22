@@ -43,7 +43,7 @@ use File::Temp q{tempfile};
 
 $/=undef;
 
-my ($fh, $tmp)=tempfile();
+my ($fh, $tmp)=tempfile(UNLINK => 1);
 die "cannot create tempfile" unless $fh;
 print ($fh <STDIN>) || die "write temp: $!";
 close $fh;
@@ -71,4 +71,3 @@ if ($ret != 0) {
 open (IN, $tmp) || die "$0: cannot read $tmp: $!\n";
 print (OUT <IN>) || die "write failure: $!";
 close IN;
-unlink($tmp);

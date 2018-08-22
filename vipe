@@ -15,6 +15,9 @@ edit the data that is being piped between programs. Your editor will
 have the full data being piped from command1 loaded into it, and when you
 close it, that data will be piped into command2.
 
+Attempts to set safe_level to File::Temp::HIGH, and prefers to use /dev/shm/ if
+it exists.
+
 =head1 ENVIRONMENT VARIABLES
 
 =over 4
